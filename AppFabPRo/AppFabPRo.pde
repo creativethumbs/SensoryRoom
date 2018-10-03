@@ -1,3 +1,7 @@
+// code repurposed from Jon Loeb's bubblemaking visualization 
+// to include audio feedback and Arduino input
+// --Ticha Sethapakdi
+
 import processing.serial.*;
 import cc.arduino.*;
 import processing.sound.*;
@@ -40,12 +44,12 @@ int col;
 
 boolean sending;
 boolean bDrawLights;
-//LightManager lightManager;
+
 
 
 void setup() { 
   println(Arduino.list());
-  //println(Arduino.list()[9]); 
+  
   voice1 = new SoundFile(this, "voice1mono.wav");
   voice1.loop(); 
   voice1.amp(0); 
@@ -64,14 +68,10 @@ void setup() {
   for (int i = 2; i <= 5; i++) {
     arduino.pinMode(i, Arduino.INPUT);
   }
-
-  // 1 pixel = 1 inch (technically)
+ 
   size(800, 600);
   frameRate(30);
-  background(0);
-
-  //lightManager = new LightManager();
-  //lightManager.init("127.0.0.1", 12345);
+  background(0); 
 
   ps = new ParticleSystem(new PVector(width*0.25, height*0.35), new PVector (0, 0.0015), 226,165,104);
   ps2 = new ParticleSystem(new PVector(width*0.65, height*0.35), new PVector (0, 0.0015), 148,186,183);
@@ -127,7 +127,6 @@ void draw() {
     pin5triggered = false; 
     voice4.amp(0);
   }
-
 
 
   ps.run();
